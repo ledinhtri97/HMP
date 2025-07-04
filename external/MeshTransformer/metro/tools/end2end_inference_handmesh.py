@@ -228,7 +228,7 @@ def run_inference(args, image_list, _metro_network, mano, renderer, mesh_sampler
     
     # # convert images to video using ffmpeg with framerate 30 
     # pred_images = os.path.join(os.path.dirname(temp_fname), "%04d_metro_pred.jpg")
-    # os.system(f"/usr/bin/ffmpeg -y -framerate 30 -i {pred_images} -pattern_type glob -c:v libx264 -pix_fmt yuv420p {video_outname}")
+    # os.system(f"ffmpeg -y -framerate 30 -i {pred_images} -pattern_type glob -c:v libx264 -pix_fmt yuv420p {video_outname}")
 
     # output_dict["cropped_cam_t"] = np.array(output_dict["cam_t"])
     one_to_T = np.arange(gt_bboxes["frame_id"].shape[0])

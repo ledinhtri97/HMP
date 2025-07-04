@@ -162,7 +162,7 @@ def reflect_gt(gt_dict):
     gt_dict["poses"] = reflected_pose
     
     pseudo_vid_path = os.path.join(os.path.dirname(pseudo_right_path), "rgb_pseudo_raw.mp4")
-    os.system(f"/usr/bin/ffmpeg -y -framerate 30 -pattern_type glob -i '{pseudo_right_path}/*.jpg' -vcodec libx264 -pix_fmt yuv420p {pseudo_vid_path}")
+    os.system(f"ffmpeg -y -framerate 30 -pattern_type glob -i '{pseudo_right_path}/*.jpg' -vcodec libx264 -pix_fmt yuv420p {pseudo_vid_path}")
     
      
 def render_gt(rgb_img_list, gt_dict, rgb_images_path, circle_rad=2, line_width=2):

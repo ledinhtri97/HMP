@@ -347,7 +347,7 @@ def run_demo(args):
                 img.save(f"{joints2d_image_folder}/{h:04d}.jpg")
                 
             if args.out_vid_path is not None:
-                cmd = f"/usr/bin/ffmpeg -y -framerate 30 -pattern_type glob -i '{joints2d_image_folder}/*.jpg' -vcodec libx264 -pix_fmt yuv420p {args.out_vid_path} "
+                cmd = f"ffmpeg -y -framerate 30 -pattern_type glob -i '{joints2d_image_folder}/*.jpg' -vcodec libx264 -pix_fmt yuv420p {args.out_vid_path} "
                 subprocess.run(cmd, shell=True)
             
             return 
@@ -482,7 +482,7 @@ def run_demo(args):
 
 
         if args.out_vid_path is not None:
-            cmd = f"/usr/bin/ffmpeg -y -framerate 30 -pattern_type glob -i '{joints2d_image_folder}/*.jpg' -vcodec libx264 -pix_fmt yuv420p {args.out_vid_path} "
+            cmd = f"ffmpeg -y -framerate 30 -pattern_type glob -i '{joints2d_image_folder}/*.jpg' -vcodec libx264 -pix_fmt yuv420p {args.out_vid_path} "
             subprocess.run(cmd, shell=True)
          
         orig_cam = convert_crop_cam_to_orig_img(

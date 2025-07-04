@@ -65,13 +65,13 @@ def get_images():
     open3d_viz_overlay.vis_opt_results(pred_file_path=hmp_npz_path, gt_file_path="", img_dir=raw_image_path, white_background=False)     
     
     # save them to method_images
-    cmd = f"/usr/bin/ffmpeg -y -i {hmp_vid_path} -r 30  {frame_dir_hmp}/%06d.png"
+    cmd = f"ffmpeg -y -i {hmp_vid_path} -r 30  {frame_dir_hmp}/%06d.png"
     # os.system(cmd)
     
     img_height, img_width = cv2.imread(raw_images[0]).shape[:2]
     
     video_path = f"./trial/{seqname}_pose_estimation.mp4"
-    cmd = f"/usr/bin/ffmpeg -y -i {raw_vid_path} -i {hmp_vid_path}  -filter_complex \
+    cmd = f"ffmpeg -y -i {raw_vid_path} -i {hmp_vid_path}  -filter_complex \
                     '[0]drawtext=text=VIDEO INPUT: fontfile=/usr/share/fonts/truetype/msttcorefonts/arial.ttf: fontcolor=blue: fontsize=w/30: x=text_w/8: y=text_h [0:v]; \
                     [1]drawtext=text=OUTPUT: fontfile=/usr/share/fonts/truetype/msttcorefonts/arial.ttf: fontcolor=blue: fontsize=w/30: x=text_w/8: y=text_h [1:v]; \
                     [0:v]scale=-1:{img_height}[0v]; \
@@ -82,7 +82,7 @@ def get_images():
     
     
     video_path = f"./trial/{seqname}_keypoint_fail.mp4"
-    cmd = f"/usr/bin/ffmpeg -y -i {blend_vid_path} -i {hmp_vid_path}  -filter_complex \
+    cmd = f"ffmpeg -y -i {blend_vid_path} -i {hmp_vid_path}  -filter_complex \
                     '[0]drawtext=text=VIDEO INPUT: fontfile=/usr/share/fonts/truetype/msttcorefonts/arial.ttf: fontcolor=blue: fontsize=w/30: x=text_w/8: y=text_h [0:v]; \
                     [1]drawtext=text=OUTPUT: fontfile=/usr/share/fonts/truetype/msttcorefonts/arial.ttf: fontcolor=blue: fontsize=w/30: x=text_w/8: y=text_h [1:v]; \
                     [0:v]scale=-1:{img_height}[0v]; \
@@ -93,7 +93,7 @@ def get_images():
     import ipdb; ipdb.set_trace()
     
     video_path = f"./trial/{seqname}_bbox_fail.mp4"
-    cmd = f"/usr/bin/ffmpeg -y -i {mmpose_vid_path} -i {hmp_vid_path}  -filter_complex \
+    cmd = f"ffmpeg -y -i {mmpose_vid_path} -i {hmp_vid_path}  -filter_complex \
                     '[0]drawtext=text=VIDEO INPUT: fontfile=/usr/share/fonts/truetype/msttcorefonts/arial.ttf: fontcolor=blue: fontsize=w/30: x=text_w/8: y=text_h [0:v]; \
                     [1]drawtext=text=OUTPUT: fontfile=/usr/share/fonts/truetype/msttcorefonts/arial.ttf: fontcolor=blue: fontsize=w/30: x=text_w/8: y=text_h [1:v]; \
                     [0:v]scale=-1:{img_height}[0v]; \
@@ -106,7 +106,7 @@ def get_images():
     # concatentate pymafx and hmp videos
 
 
-    # cmd = f"/usr/bin/ffmpeg -i {pymafx_path} -r 30  {frame_dir_pymafx}/%06d.jpg"
+    # cmd = f"ffmpeg -i {pymafx_path} -r 30  {frame_dir_pymafx}/%06d.jpg"
     # os.system(cmd)
     
     

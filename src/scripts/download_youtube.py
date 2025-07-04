@@ -84,9 +84,9 @@ for i, (vid_link, vidname) in enumerate(video_weblink_dict.items()):
             hflip = vidname in flip_list
                         
             if hflip:
-                command_str = f"/usr/bin/ffmpeg -i '{vid_file_path}' -vf hflip -ss {trim_part[0]} -to {trim_part[1]}  -r 30 {output_folder}/rgb_raw.mp4 -y"
+                command_str = f"ffmpeg -i '{vid_file_path}' -vf hflip -ss {trim_part[0]} -to {trim_part[1]}  -r 30 {output_folder}/rgb_raw.mp4 -y"
             else:
-                command_str = f"/usr/bin/ffmpeg -i '{vid_file_path}' -ss {trim_part[0]} -to {trim_part[1]} -c:v libx264 -r 30 {output_folder}/rgb_raw.mp4 -y"
+                command_str = f"ffmpeg -i '{vid_file_path}' -ss {trim_part[0]} -to {trim_part[1]} -c:v libx264 -r 30 {output_folder}/rgb_raw.mp4 -y"
                 # command_str = f"ffmpeg -i '{vid_file_path}' -ss {trim_part[0]} -to {trim_part[1]} -c:v /usr/NX/lib/libx264.so  -r 30 {output_folder}/rgb_raw.mp4 -y"
 
         
@@ -97,7 +97,7 @@ for i, (vid_link, vidname) in enumerate(video_weblink_dict.items()):
         if not os.path.exists(f"{output_folder}/rgb"): 
             os.makedirs(f"{output_folder}/rgb", exist_ok=True)
             # make them video as well
-            command_str = f"/usr/bin/ffmpeg -i {output_folder}/rgb_raw.mp4 -r 30 '{output_folder}/rgb/%06d.jpg'"
+            command_str = f"ffmpeg -i {output_folder}/rgb_raw.mp4 -r 30 '{output_folder}/rgb/%06d.jpg'"
             os.system(command_str)    
             
  

@@ -1,14 +1,13 @@
 #!/bin/bash
-set -e
 
-echo "Please enter your username in HMP webpage:"
-# read USERNAME 
-export USERNAME=$USERNAME
-
-echo "Please enter your password"
-# stty -echo
-# read PASSO
-export PASSWORD=$PASSWORD
+if [ ! -d "external/mmpose" ]; then
+    echo "Cloning mmpose into external/mmpose"
+    cd external
+    git clone https://github.com/open-mmlab/mmpose.git
+    cd mmpose
+    git checkout v1.3.1
+    cd ../..
+fi
 
 mkdir -p downloads
 zip_files=("body_models.zip" "model.zip" "data.zip")
@@ -27,7 +26,7 @@ done
 
 hmp_path="./outputs/generative/results"
 bm_path="./data/body_models"
-pymafx_path="./external/PyMAF-X/data"
+pymafx_path="./external/PyMAF-X/"
 mmpose_path="./data/mmpose_models"
 mean_std_path='./data/amass/generative'
 
@@ -39,19 +38,16 @@ python src/scripts/download_all.py
 
 echo "Downloading MMPose"
 hand_detector_path="https://download.openmmlab.com/mmpose/mmdet_pretrained/cascade_rcnn_x101_64x4d_fpn_20e_onehand10k-dac19597_20201030.pth"
-# keypoint_detector_path="https://download.openmmlab.com/mmpose/hand/resnet/res50_onehand10k_256x256-739c8639_20210330.pth"
 keypoint_detector_path="https://download.openmmlab.com/mmpose/hand/resnet/res50_onehand10k_256x256-e67998f6_20200813.pth"
 
 curl -L -o "$mmpose_path/cascade_rcnn_x101_64x4d_fpn_20e_onehand10k-dac19597_20201030.pth" "$hand_detector_path"
 curl -L -o "$mmpose_path/res50_onehand10k_256x256-e67998f6_20200813.pth" "$keypoint_detector_path"
 
-unzip -o "downloads/body_models.zip" -d $bm_path
-unzip -o "downloads/data.zip" -d $pymafx_path
-unzip -o "downloads/model.zip" -d $hmp_path
+unzip "./downloads/body_models.zip" -d "./data"
+unzip -o "./downloads/data.zip" -d $pymafx_path
+unzip -o "./downloads/model.zip" -d $hmp_path
 mv './outputs/generative/results/model/mean-neutral-128-30fps.pt'  './data/amass/generative/mean-neutral-128-30fps.pt'  
 mv './outputs/generative/results/model/std-neutral-128-30fps.pt'  './data/amass/generative/std-neutral-128-30fps.pt'  
 
 
 echo "DONE!"
-
- 

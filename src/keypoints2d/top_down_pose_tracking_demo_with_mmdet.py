@@ -320,7 +320,7 @@ class MMPOSEJson:
            
             cv2.imwrite(f"{out_folder_path}/{frame_idx:04d}.jpg", frame_vis)            
 
-        cmd = f"/usr/bin/ffmpeg -y -pattern_type glob -i '{out_folder_path}/*.jpg' -r 30 {os.path.join(os.path.dirname(out_folder_path), 'rgb_mmpose.mp4')}"
+        cmd = f"ffmpeg -y -pattern_type glob -i '{out_folder_path}/*.jpg' -r 30 {os.path.join(os.path.dirname(out_folder_path), 'rgb_mmpose.mp4')}"
         subprocess.run(cmd, shell=True)
  
  

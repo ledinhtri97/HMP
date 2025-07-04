@@ -174,7 +174,7 @@ def make_checker_board_texture(color1='black', color2='white', width=2, height=1
 
 def images_to_video(img_dir, out_path, img_fmt="%06d.jpg", fps=30, crf=25, verbose=False):
     os.makedirs(osp.dirname(out_path), exist_ok=True)
-    ffmpeg_path = '/usr/bin/ffmpeg' if osp.exists('/usr/bin/ffmpeg') else 'ffmpeg'
+    ffmpeg_path = 'ffmpeg' if osp.exists('ffmpeg') else 'ffmpeg'
     cmd = [ffmpeg_path, '-y', '-r', f'{fps}', '-f', 'image2', '-start_number', '0',
             '-i', f'{img_dir}/{img_fmt}', '-vcodec', 'libx264', 
             '-vf', "pad=ceil(iw/2)*2:ceil(ih/2)*2", '-crf', f'{crf}', '-pix_fmt', 'yuv420p', out_path]
@@ -185,10 +185,10 @@ def images_to_video(img_dir, out_path, img_fmt="%06d.jpg", fps=30, crf=25, verbo
     
 def images_to_video_glob(img_dir, out_path, img_fmt="%06d.png", fps=30, crf=25, verbose=False):
     os.makedirs(osp.dirname(out_path), exist_ok=True)
-    ffmpeg_path = 'ffmpeg' # '/usr/bin/ffmpeg' if osp.exists('/usr/bin/ffmpeg') else 'ffmpeg'
-    cmd = f"/usr/bin/ffmpeg -framerate 30 -pattern_type glob -i '{img_dir}/*.jpg' -y -c:v libx264 -pix_fmt yuv420p {out_path}"
+    ffmpeg_path = 'ffmpeg' # 'ffmpeg' if osp.exists('ffmpeg') else 'ffmpeg'
+    cmd = f"ffmpeg -framerate 30 -pattern_type glob -i '{img_dir}/*.jpg' -y -c:v libx264 -pix_fmt yuv420p {out_path}"
     subprocess.run(cmd, shell=True)
-    cmd = f"/usr/bin/ffmpeg -framerate 30 -pattern_type glob -i '{img_dir}/*.png' -y -c:v libx264 -pix_fmt yuv420p {out_path}"
+    cmd = f"ffmpeg -framerate 30 -pattern_type glob -i '{img_dir}/*.png' -y -c:v libx264 -pix_fmt yuv420p {out_path}"
     subprocess.run(cmd, shell=True)
 
 
@@ -514,8 +514,8 @@ class Open3DRenderer():
 
         if len(vid_paths) == 2:
             # call ffmpeg to create video 
-            # cmd = f"/usr/bin/ffmpeg -y -i {vid_paths[0]} -i {vid_paths[0]} -i {vid_paths[1]} -filter_complex \
-            cmd = f"/usr/bin/ffmpeg -y -i {raw_vid_path} -i {vid_paths[1]} -i {vid_paths[0]} -filter_complex \
+            # cmd = f"ffmpeg -y -i {vid_paths[0]} -i {vid_paths[0]} -i {vid_paths[1]} -filter_complex \
+            cmd = f"ffmpeg -y -i {raw_vid_path} -i {vid_paths[1]} -i {vid_paths[0]} -filter_complex \
                     '[0]drawtext=text=VIDEO INPUT: fontfile=/usr/share/fonts/truetype/msttcorefonts/arial.ttf: fontcolor=black: fontsize=w/30: x=text_w/8: y=text_h [0:v]; \
                     [1]drawtext=text={method[1].upper()}: fontfile=/usr/share/fonts/truetype/msttcorefonts/arial.ttf: fontcolor=black: fontsize=w/30: x=text_w/8: y=text_h [1:v]; \
                     [2]drawtext=text={method[0].upper()}: fontfile=/usr/share/fonts/truetype/msttcorefonts/arial.ttf: fontcolor=black: fontsize=w/30: x=text_w/8: y=text_h [2:v]; \
@@ -527,7 +527,7 @@ class Open3DRenderer():
         
         else:             
             # convert to video without any filtering. For MeTro visualization
-            cmd = f"/usr/bin/ffmpeg -pattern_type glob -y -i '{frame_dir}/*.jpg' {flip_command} {video_path}"
+            cmd = f"ffmpeg -pattern_type glob -y -i '{frame_dir}/*.jpg' {flip_command} {video_path}"
 
         subprocess.run(cmd, shell=True)
      

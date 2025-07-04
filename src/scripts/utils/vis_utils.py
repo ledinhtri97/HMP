@@ -66,7 +66,7 @@ def create_video(img_path, out_path, fps):
     Creates a video from the frame format in the given directory and saves to out_path.
     '''
     os.system("rm " + out_path)
-    os.system('/usr/bin/ffmpeg -y -r ' + str(fps) + ' -i ' + img_path + ' -vcodec libx264 -pix_fmt yuv420p ' + out_path)
+    os.system('ffmpeg -y -r ' + str(fps) + ' -i ' + img_path + ' -vcodec libx264 -pix_fmt yuv420p ' + out_path)
     return 
 
 def create_gif(img_path, out_path, fps):

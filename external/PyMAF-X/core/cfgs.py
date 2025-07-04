@@ -52,10 +52,15 @@ cfg.LOSS.POINT_REGRESSION_WEIGHTS = 0.5
 cfg.MODEL = CN(new_allowed=True)
 
 cfg.MODEL.PyMAF = CN(new_allowed=True)
+cfg.MODEL.PyMAF.OPT_HEAD = False
+cfg.MODEL.MESH_MODEL = "mano"  # mano, smpl, smplx, flame
+cfg.MODEL.PyMAF.MAF_ON = True
+cfg.MODEL.PyMAF.HF_BACKBONE = "res50"
 
 ## switch
 cfg.TRAIN.BATCH_SIZE = 64
 cfg.TRAIN.VAL_LOOP = True
+cfg.TRAIN.BHF_MODE = "body_only" # body_only, hand_only, face_only, body_hand, full_body
 
 cfg.TEST = CN(new_allowed=True)
 

@@ -369,7 +369,7 @@ def run_pymafx(video_p, pymaf_out_path, joints2d_image_path=None, jts_vid=None, 
         command_list = ["python", "-m", "apps.demo_mano", "--image_folder", rel_vid_p, "--detection_threshold", "0.3",
         "--misc", "MODEL.PyMAF.OPT_HEAD", "False", "TRAIN.BHF_MODE", "hand_only", "MODEL.MESH_MODEL", "mano",
         "--output_folder", rel_out_p, "--pretrained_model", "./data/pretrained_model/PyMAF-X_model_checkpoint_v1.1.pt", 
-         "--out_vid_path", jts_vid]
+         "--out_vid_path", jts_vid, "--cfg_file", "/workspace/HMP/configs/pymafx_config.yaml"]
 
         if joints2d_image_path is not None:
             joints2d_image_path = os.path.join("../..", joints2d_image_path) 
@@ -381,7 +381,9 @@ def run_pymafx(video_p, pymaf_out_path, joints2d_image_path=None, jts_vid=None, 
         command_str = " ".join(command_list)
        
         try: 
+            print(f"Running PyMAF-X with command: {command_str}")
             os.system(command_str)
+            print(f"PyMAF-X finished {pickle_path} -> {os.path.exists(pickle_path)}")
         except:
             exit("PyMAF-X failed")
             
@@ -582,7 +584,7 @@ def blend_keypoints(source_path1, source_path2, target_path, gt_frames=None, raw
     
        
     if not blend_vid_out_path is None and render:
-        os.system(f"/usr/bin/ffmpeg -y -framerate 30 -i {blend_vid_out_path}/%04d.jpg -vcodec libx264 -pix_fmt yuv420p {blend_vid_out_path}.mp4")  
+        os.system(f"ffmpeg -y -framerate 30 -i {blend_vid_out_path}/%04d.jpg -vcodec libx264 -pix_fmt yuv420p {blend_vid_out_path}.mp4")  
     
     return
 

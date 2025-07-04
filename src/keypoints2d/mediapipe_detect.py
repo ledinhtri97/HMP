@@ -503,7 +503,7 @@ class MPJson:
                 cv2.imwrite(fname_single_view, self.annotated_image)
             
             if video_out:
-                cmd = f"/usr/bin/ffmpeg -y -framerate 30 -pattern_type glob -i '{out_dir}/*{suffix}' -vcodec libx264 -pix_fmt yuv420p {os.path.join(os.path.dirname(out_dir), 'rgb_mediapipe.mp4')} "
+                cmd = f"ffmpeg -y -framerate 30 -pattern_type glob -i '{out_dir}/*{suffix}' -vcodec libx264 -pix_fmt yuv420p {os.path.join(os.path.dirname(out_dir), 'rgb_mediapipe.mp4')} "
                 subprocess.run(cmd, shell=True)
                 
                 
@@ -691,7 +691,7 @@ class MPJson:
             np.savez(os.path.join(os.path.dirname(out_dir), 'confidences/mediapipe_std.npz'), **std_dict)
 
             if video_out:
-                cmd = f"/usr/bin/ffmpeg -y -framerate 30 -pattern_type glob -i '{out_dir}/*{suffix}' -vcodec libx264 -pix_fmt yuv420p {os.path.join(os.path.dirname(out_dir), 'rgb_mediapipe.mp4')} "
+                cmd = f"ffmpeg -y -framerate 30 -pattern_type glob -i '{out_dir}/*{suffix}' -vcodec libx264 -pix_fmt yuv420p {os.path.join(os.path.dirname(out_dir), 'rgb_mediapipe.mp4')} "
                 subprocess.run(cmd, shell=True)
 
 
@@ -958,7 +958,7 @@ class MPJson:
                 cv2.imwrite(fname_single_view, merged_single_view_img)
             
             if video_out:  
-                cmd = f"/usr/bin/ffmpeg -y -framerate 30 -pattern_type glob -i '{out_dir}/*{suffix}' -vcodec libx264 -pix_fmt yuv420p {os.path.join(os.path.dirname(out_dir), 'rgb_mediapipe_mv.mp4')} "
+                cmd = f"ffmpeg -y -framerate 30 -pattern_type glob -i '{out_dir}/*{suffix}' -vcodec libx264 -pix_fmt yuv420p {os.path.join(os.path.dirname(out_dir), 'rgb_mediapipe_mv.mp4')} "
                 subprocess.run(cmd, shell=True)
 
  
