@@ -54,8 +54,10 @@ cfg.MODEL = CN(new_allowed=True)
 cfg.MODEL.PyMAF = CN(new_allowed=True)
 cfg.MODEL.PyMAF.OPT_HEAD = False
 cfg.MODEL.MESH_MODEL = "mano"  # mano, smpl, smplx, flame
-cfg.MODEL.PyMAF.MAF_ON = True
+cfg.MODEL.PyMAF.MAF_ON = False
 cfg.MODEL.PyMAF.HF_BACKBONE = "res50"
+cfg.MODEL.PyMAF.HF_AUX_SUPV_ON = False
+
 
 ## switch
 cfg.TRAIN.BATCH_SIZE = 64

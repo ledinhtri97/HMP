@@ -102,7 +102,7 @@ def get_ground_truth_seq(img_dir):
         gt_dict = get_ho3d_v3_gt(gt_path) 
         
     else:
-        pass 
+        return None 
 
     # change keynames 
     gt_dict["rh_pose"] = torch.tensor(gt_dict.pop("poses"))

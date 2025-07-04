@@ -25,7 +25,7 @@ import open3d.visualization.rendering as rendering
 cur_file_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(cur_file_path, '..'))
 
-from fitting_utils import RIGHT_WRIST_BASE_LOC
+# from fitting_utils import RIGHT_WRIST_BASE_LOC
 
 AUGMENTED_MANO_CHAIN = np.array([-1, 0, 1, 2, 0, 4, 5, 0, 7, 8, 0, 10, 11, 0, 13, 14, 15, 3, 6, 12, 9]) 
 
@@ -255,9 +255,9 @@ class Open3DRenderer():
         if hasattr(self, 'render'):
             del self.render
             print('deleting render')
-            
+        
         self.render = rendering.OffscreenRenderer(width=self.window_size[0], height=self.window_size[1])
-            
+        
         self.render.scene.view.set_ambient_occlusion(self.enable_ambient_occlusion)
         self.render.scene.view.set_antialiasing(self.enable_antialiasing)
         self.render.scene.view.set_shadowing(self.enable_shadow)
@@ -267,7 +267,6 @@ class Open3DRenderer():
         # self.render.scene.scene.set_sun_light([-0.707, 0.0, .707], [1.0, 1.0, 1.0], 150000)
         self.render.scene.scene.set_sun_light([-np.sqrt(1/3), np.sqrt(1/3), np.sqrt(1/3)], [1.0, 1.0, 1.0], 150000)        
         self.render.scene.scene.enable_sun_light(True)
-         
         
         # floor
         if self.use_floor:
@@ -291,7 +290,7 @@ class Open3DRenderer():
             h += 0.1
             ground_plane.translate([-extent // 2, -extent // 2, -h])
             self.render.scene.add_geometry("ground_plane", ground_plane, gp_mat)
-            
+           
         if self.show_axes: 
             print('show axes')
             # self.render.scene.show_axes(True)
@@ -391,7 +390,8 @@ class Open3DRenderer():
         
         if self.view_type == 'camera':           
             self.window_size = (int(img_width), int(img_height))
-              
+        
+        print(f"open3d_viz_overlay start init scene window size: {self.window_size}")
         self.init_scene()
   
         if frame_dir is None:
@@ -487,8 +487,11 @@ class Open3DRenderer():
         
         frame_dir = os.path.join(os.path.dirname(video_path), "open3d_img")
         vid_paths = []
-    
-        for i in range(len(smpl_seq_list)):
+
+        print("========== in create_animation")
+        num_seq = len(smpl_seq_list)
+
+        for i in range(num_seq):
     
             # check if the video already exists in encode-decode folder
             if method[i] == "pymafx" and os.path.exists(encode_decode_pymafx):
@@ -496,17 +499,17 @@ class Open3DRenderer():
             else:
                 seq_list = [smpl_seq_list[i]] if i !=2 else smpl_seq_list 
                 video_path_inp = video_path.replace('.mp4', f'_{method[i]}.mp4')
-                print(video_path_inp)
-   
-                self.render_video(smpl_seq_list=seq_list, 
-                            img_width=img_width, 
-                            img_height=img_height,  
-                            img_dir=img_dir, 
-                            video_path=video_path_inp,
-                            fps=fps,
-                            frame_dir=frame_dir,
-                            method=method[i],
-                            white_background=white_background)
+                print(f"open3d_viz render {video_path_inp} with method {method[i]}")
+                if num_seq > 1:
+                    self.render_video(smpl_seq_list=seq_list, 
+                                img_width=img_width, 
+                                img_height=img_height,  
+                                img_dir=img_dir, 
+                                video_path=video_path_inp,
+                                fps=fps,
+                                frame_dir=frame_dir,
+                                method=method[i],
+                                white_background=white_background)
             
             vid_paths.append(video_path_inp) 
 
@@ -672,7 +675,7 @@ def vis_opt_results(pred_file_path, gt_file_path, img_dir, post_process_flag=Fal
         use_floor=True,
         add_cube=False, 
         cam_distance=5,
-        verbose=False,
+        verbose=True,
         headless=True,
         show_axes=False,
         enable_shadow=False, 

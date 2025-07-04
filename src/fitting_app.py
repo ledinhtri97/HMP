@@ -914,15 +914,17 @@ def multi_stage_opt(config_f, data_name, init_method_name):
 
       
     # visualize the results
+    pred_file_path= f"{args.save_path}/recon_000_30fps.npz"
     if open3d_viz_flag:
-        print("Visualizing optimization results") 
-        open3d_viz_overlay.vis_opt_results(pred_file_path=f"{args.save_path}/recon_000_30fps.npz", 
+        print("Visualizing optimization results")
+        print(f"Open3d args: {pred_file_path}, {gt_npz_filepath}, {vis_vid_name}, {gt_values['handedness']}")
+        open3d_viz_overlay.vis_opt_results(pred_file_path=pred_file_path, 
                                  gt_file_path=gt_npz_filepath, 
                                   img_dir=vis_vid_name,
                                   flip_flag = gt_values["handedness"] == "left")
     if scenepic_viz_flag: 
-        scenepic_viz.vis_opt_results(pred_file_path=f"{args.save_path}/recon_000_30fps.npz", 
-                                 gt_file_path=gt_npz_filepath, 
+        scenepic_viz.vis_opt_results(npz_file_path=pred_file_path, 
+                                 gt_npz_file_path=gt_npz_filepath, 
                                  img_dir=vis_vid_name)
 
     return 

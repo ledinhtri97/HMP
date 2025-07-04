@@ -10,6 +10,17 @@ if [ ! -d "external/mmpose" ]; then
 fi
 
 mkdir -p downloads
+if [ ! -d "downloads/Open3D" ]; then
+    echo "Cloning Open3D into downloads/Open3D"
+    cd downloads
+    git clone https://github.com/isl-org/Open3D.git
+    cd Open3D
+    git checkout v0.19.0
+    cd ../..
+fi
+
+# 
+
 zip_files=("body_models.zip" "model.zip" "data.zip")
 
 # Loop through each zip file

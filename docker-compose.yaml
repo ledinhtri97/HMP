@@ -3,14 +3,16 @@ services:
     container_name: hmp
     image: pytorch/pytorch:2.1.0-cuda12.1-cudnn8-devel
     volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
+      # - /etc/timezone:/etc/timezone:ro
+      # - /etc/localtime:/etc/localtime:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix
       - ~/workspace/:/workspace
     
     runtime: nvidia
     restart: unless-stopped
 
     environment:
+      # DISPLAY: ${DISPLAY}
       PYTHONIOENCODING: utf-8
       NVIDIA_VISIBLE_DEVICES: all
       NVIDIA_DRIVER_CAPABILITIES: all
