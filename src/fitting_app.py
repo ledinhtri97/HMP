@@ -926,7 +926,7 @@ def multi_stage_opt(config_f, data_name, init_method_name):
                                  gt_npz_file_path=gt_npz_filepath, 
                                  img_dir=vis_vid_name)
     
-    print(f"EGL_PLATFORM=surfaceless python3 src/rendering.py {pred_file_path} {gt_npz_filepath} /home/ubuntu/{vis_vid_name} {handedness}")
+    print(f"EGL_PLATFORM=surfaceless python3 src/rendering.py {pred_file_path} {gt_npz_filepath} {vis_vid_name} {handedness}")
 
     return
 
@@ -1438,16 +1438,16 @@ if __name__ == '__main__':
     cfg_name = opt.config.split(".")[0]
     opt.use_hposer = False
     
-    args.save_path = opt.save_path = os.path.join("./optim", cfg_name, opt.dataname, opt.vid_path.split("/")[-2])   
+    args.save_path = os.path.join("./optim", cfg_name, opt.dataname, opt.vid_path.split("/")[-2])   
     args.plot_loss = True
     
     if os.path.splitext(opt.vid_path)[-1] == ".mp4":
 
         # vid_frame_num = cv2.VideoCapture(opt.vid_path).get(cv2.CAP_PROP_FRAME_COUNT)
         video_name = os.path.basename(opt.vid_path).split(".")[0]
-        video_extract_dir = f"hmp_extracter_{video_name}"
-        rgb_frames_path = os.path.join(os.path.dirname(opt.vid_path), video_extract_dir, "rgb")
-        
+        video_extract_dir = f"hmp_{video_name}"
+        rgb_frames_path = os.path.join("./optim", video_extract_dir, "rgb")
+        args.save_path = os.path.join("./optim", video_extract_dir, f"{cfg_name}_{opt.dataname}")
         # create a folder and save the frames there
         os.makedirs(rgb_frames_path, exist_ok=True)
 
