@@ -500,16 +500,15 @@ class Open3DRenderer():
                 seq_list = [smpl_seq_list[i]] if i !=2 else smpl_seq_list 
                 video_path_inp = video_path.replace('.mp4', f'_{method[i]}.mp4')
                 print(f"open3d_viz render {video_path_inp} with method {method[i]}")
-                if num_seq > 1:
-                    self.render_video(smpl_seq_list=seq_list, 
-                                img_width=img_width, 
-                                img_height=img_height,  
-                                img_dir=img_dir, 
-                                video_path=video_path_inp,
-                                fps=fps,
-                                frame_dir=frame_dir,
-                                method=method[i],
-                                white_background=white_background)
+                self.render_video(smpl_seq_list=seq_list, 
+                            img_width=img_width, 
+                            img_height=img_height,  
+                            img_dir=img_dir, 
+                            video_path=video_path_inp,
+                            fps=fps,
+                            frame_dir=frame_dir,
+                            method=method[i],
+                            white_background=white_background)
             
             vid_paths.append(video_path_inp) 
 
@@ -528,7 +527,7 @@ class Open3DRenderer():
                     [0v][1v][2v]hstack=inputs=3[outv]' \
                     -map '[outv]' {video_path} -y"
         
-        else:             
+        elif num_seq > 1:             
             # convert to video without any filtering. For MeTro visualization
             cmd = f"ffmpeg -pattern_type glob -y -i '{frame_dir}/*.jpg' {flip_command} {video_path}"
 
