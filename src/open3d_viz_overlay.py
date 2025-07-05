@@ -514,6 +514,7 @@ class Open3DRenderer():
 
         flip_command = '-vf hflip' if self.flip_flag else ''
 
+        cmd = None
         if len(vid_paths) == 2:
             # call ffmpeg to create video 
             # cmd = f"ffmpeg -y -i {vid_paths[0]} -i {vid_paths[0]} -i {vid_paths[1]} -filter_complex \
@@ -531,7 +532,8 @@ class Open3DRenderer():
             # convert to video without any filtering. For MeTro visualization
             cmd = f"ffmpeg -pattern_type glob -y -i '{frame_dir}/*.jpg' {flip_command} {video_path}"
 
-        subprocess.run(cmd, shell=True)
+        if cmd:
+            subprocess.run(cmd, shell=True)
      
     
 def get_mano_seq(stage_res, nemf_out=False):
