@@ -921,14 +921,14 @@ def multi_stage_opt(config_f, data_name, init_method_name):
                                  gt_file_path=gt_npz_filepath, 
                                   img_dir=vis_vid_name,
                                   flip_flag = handedness == "left")
+    else:
+        print("===== Please use below command to visualize the results in EGL Surfaceless mode ===")
+        print(f"EGL_PLATFORM=surfaceless python3 src/rendering.py {pred_file_path} {gt_npz_filepath} {vis_vid_name} {handedness}")
     if scenepic_viz_flag: 
         scenepic_viz.vis_opt_results(npz_file_path=pred_file_path, 
                                  gt_npz_file_path=gt_npz_filepath, 
                                  img_dir=vis_vid_name)
     
-    print("===== Please use below command to visualize the results in EGL Surfaceless mode ===")
-    print(f"EGL_PLATFORM=surfaceless python3 src/rendering.py {pred_file_path} {gt_npz_filepath} {vis_vid_name} {handedness}")
-
     return
 
 
