@@ -904,30 +904,31 @@ def multi_stage_opt(config_f, data_name, init_method_name):
     # assign that according to the initialization method    
     init_phase_npz_path = os.path.join(args.save_path, f'recon_000_30fps.npz')
     
-    open3d_viz_flag, scenepic_viz_flag = True, False 
+    open3d_viz_flag, scenepic_viz_flag = False, False 
     pymafx_pred_path = args.save_path.replace(config_type, "_pymafx_raw")
     gt_npz_filepath = f"{pymafx_pred_path}/recon_000_30fps.npz"
     
     # vis_vid_name = vid_path  
     vis_vid_name = joints2d_vid_out_path
-
-
-      
+    
     # visualize the results
     pred_file_path= f"{args.save_path}/recon_000_30fps.npz"
+    handedness = gt_values["handedness"]
     if open3d_viz_flag:
         print("Visualizing optimization results")
-        print(f"Open3d args: {pred_file_path}, {gt_npz_filepath}, {vis_vid_name}, {gt_values['handedness']}")
+        print(f"Open3d args: {pred_file_path}, {gt_npz_filepath}, {vis_vid_name}, {handedness}")
         open3d_viz_overlay.vis_opt_results(pred_file_path=pred_file_path, 
                                  gt_file_path=gt_npz_filepath, 
                                   img_dir=vis_vid_name,
-                                  flip_flag = gt_values["handedness"] == "left")
+                                  flip_flag = handedness == "left")
     if scenepic_viz_flag: 
         scenepic_viz.vis_opt_results(npz_file_path=pred_file_path, 
                                  gt_npz_file_path=gt_npz_filepath, 
                                  img_dir=vis_vid_name)
+    
+    print(f"EGL_PLATFORM=surfaceless python3 src/rendering.py {pred_file_path} {gt_npz_filepath} /home/ubuntu/{vis_vid_name} {handedness}")
 
-    return 
+    return
 
 
 
@@ -1443,8 +1444,9 @@ if __name__ == '__main__':
     if os.path.splitext(opt.vid_path)[-1] == ".mp4":
 
         # vid_frame_num = cv2.VideoCapture(opt.vid_path).get(cv2.CAP_PROP_FRAME_COUNT)
-
-        rgb_frames_path = os.path.join(os.path.dirname(opt.vid_path), "rgb")
+        video_name = os.path.basename(opt.vid_path).split(".")[0]
+        video_extract_dir = f"hmp_extracter_{video_name}"
+        rgb_frames_path = os.path.join(os.path.dirname(opt.vid_path), video_extract_dir, "rgb")
         
         # create a folder and save the frames there
         os.makedirs(rgb_frames_path, exist_ok=True)
